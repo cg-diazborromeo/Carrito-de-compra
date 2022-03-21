@@ -1,5 +1,3 @@
-// dos arrays uno tiene los productos, el otro esta vacio(sera llenado con las opciones del cliente)
-
 const productos = [
     {
       nombre: "harina",
@@ -51,18 +49,43 @@ if (seleccion == "si") {
 
 while (seleccion != "no") {
   let producto = prompt("agrega un producto a tu carrito!");
+  let precio = 0;
+
   if (
     producto == "harina" ||
     producto == "galletitas" ||
     producto == "pollo" ||
     producto == "leche" ||
     producto == "gaseosa"
+
   ) {
+    //para hacer que el precio coinsida con el del producto se usa un case
+      switch (producto) {
+        case "harina":
+          precio = 50;
+          break;
+        case "galletitas":
+          precio = 100;
+          break;
+        case "pollo":
+          precio = 150;
+          break;
+        case "leche":
+          precio = 400;
+          break;
+        case "gaseosa":
+          precio = 500;
+          break;
+        default:
+          break;
+      }
     let unidades = parseInt(
       prompt("cuantas unidades de ese producto queres llevar")
     );
-    carrito.push({ producto, unidades });
+
+    carrito.push({ producto, unidades, precio });
     console.log(carrito);
+
   } else {
     alert("no tenemos ese prodcto");
   }
@@ -72,20 +95,22 @@ while (seleccion != "no") {
   seleccion = prompt("quiere seguir comprando si o no");
 
   //si el usuario elege la opcion de no seguir comprando
-  //le rrecorremos el array que anteriormente estaba vacio y ahora tiene sus productos con el metodo map
-  //luego en un alert le mostramos el carrito y con el metodo join le mostramos sus productos separados con el ( - )
+  //le rrecorremos el array con forEach que anteriormente estaba vacio y ahora tiene sus productos con el metodo map
+  //luego en consola le mostramos el casa producto que eligio, cuantas unidades y el total a pagar por ese producto
   while (seleccion == "no") {
     alert("gracias por la compra chau");
 
     carrito.forEach((carritoFinal) => {
       console.log(
-        `"producto:" ${carritoFinal.producto}, "unidades:" ${carritoFinal.unidades}`
+        `"producto:" ${carritoFinal.producto}, "unidades:" ${
+          carritoFinal.unidades
+        }, "total a pagar por producto:" ${carritoFinal.unidades * carritoFinal.precio}`
       );
     });
-    /*const total = carrito.reduce((acc, el) => acc + el.unidades , 0)
-        alert(total)*/
     break;
   }
 }
-//que faltaría?
-//ver como hacer para calcular el precio total de los productos que eligió
+
+//al final con el metodo reduce se calcula el total de todos los productos con sus unidades!
+const total = carrito.reduce((acc, el) => acc + el.precio * el.unidades, 0)
+console.log(`el total a pagar por su compra es de:  ${total}`)
